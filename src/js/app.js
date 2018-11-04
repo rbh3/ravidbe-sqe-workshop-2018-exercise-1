@@ -8,3 +8,12 @@ $(document).ready(function () {
         $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
     });
 });
+
+function jsonAsTable(myJSON){
+    const myProgram=JSON.parse(myJSON);
+    myProgram.body.forEach(item=>{
+
+    });
+
+
+}
