@@ -1,126 +1,78 @@
 import $ from 'jquery';
 import {parseCode} from './code-analyzer';
-import * as esprima from 'esprima';
+
+let lineCount=1;
+let myTable=[];
 
 $(document).ready(function () {
     $('#codeSubmissionButton').click(() => {
         let codeToParse = $('#codePlaceholder').val();
         let parsedCode = parseCode(codeToParse);
-        parseAllCode(parsedCode);
-        console.log(myTable);
+        lineCount=1;
+        myTable=[];
         $('#parsedCode').val(JSON.stringify(parsedCode, null, 2));
+        parseAllCode(parsedCode);
+        $('#table').append(objectToTable());
     });
 });
 
-let lineCount=1;
-let myTable=[];
-
 const parseAllCode = (codeToParse) =>{
-    myTable=[];
     codeToParse.body.forEach(item=>{
         cases(item);
     });
 };
 
-const cases=(myCase)=>{
-    switch (myCase.type) {
-    case 'FunctionDeclaration': {
-        fundecl(myCase);
-        break;
-    }
-    case 'VariableDeclaration': {
-        vardecl(myCase);
-        break;
-    }
-    case 'ExpressionStatement': {
-        expState(myCase);
-        break;
-    }
-    case 'WhileStatement': {
-        whileState(myCase);
-        break;
-    }
-    case 'IfStatement': {
-        ifState(myCase);
-        break;
-    }
-    case 'ReturnStatement':{
-        returnState(myCase);
-        break;
-    }
-    case 'Identifier': {
-        return myCase.name;
-    }
-    case 'UnaryExpression':{
-        return unaryExp(myCase);
-        break;
-    }
-    case 'MemberExpression': {
-        return myCase.object.name + '[' + cases(myCase.property) + ']';
-    }
+const cases= (myCase)=>{
+    return allCases[myCase.type](myCase);
+};
 
+const elseIfState= (item)=>{
+    ifState(item,'Else If Statement');
+};
+
+const ifState = (item,type)=>{
+    if (type===undefined)
+        type='If Statement';
+    myTable.push({Line: lineCount , Type:type, Name: '', Condition:cases(item.test), Value:''});
+    lineCount++;
+    cases(item.consequent);
+    if (item.alternate!=null)
+    {
+        if (item.alternate.type=='IfStatement')
+            item.alternate.type='ElseIfStatment';
+        else {
+            myTable.push({Line: lineCount , Type:'Else Statement', Name: '', Condition:'', Value:''});
+            lineCount++;
+        }
+        cases(item.alternate);
     }
 };
-const expState=(item) =>{
-    if(item.expression.right.type==='Literal')
-        myTable.push({Line: lineCount , Type: item.expression.type, Name: item.expression.left.name, Condition:'' , Value: item.expression.right.value});
-    if(item.expression.right.type==='BinaryExpression')
-        myTable.push({Line: lineCount , Type: item.expression.type, Name: item.expression.left.name, Condition:'' , Value: binaexp(item.expression.right)});
-    if(item.expression.right.type==='Identifier')
-        myTable.push({Line: lineCount , Type: item.expression.type, Name: item.expression.left.name, Condition:'' , Value: item.expression.right.name});
+const updateExp= (item)=>{
+    myTable.push({Line: lineCount,Type: item.type, Name: updateState(item),Condition: '',Value: ''});
+    lineCount++;
+};
+const assExp=(item) =>{
+    myTable.push({Line: lineCount,Type: item.type,Name: cases(item.left),Condition: '',Value: cases(item.right)});
     lineCount++;
 };
 
+const expState=(item) =>{
+    cases(item.expression);
+};
+
 const whileState=(item) =>{
-    myTable.push({Line: lineCount , Type: item.type, Name: '', Condition: binaexp(item.test), Value:''});
+    myTable.push({Line: lineCount , Type: item.type, Name: '', Condition: binaryExp(item.test), Value:''});
     lineCount++;
     parseAllCode(item.body);
     lineCount++;
 };
 
-const ifState=(item) =>{
-    myTable.push({Line: lineCount , Type: item.type, Name: '', Condition: binaexp(item.test), Value:''});
-    lineCount++;
-    cases(item.consequent);
-    if(item.alternate) {
-        if(item.alternate.type==='IfStatement'){
-            myTable.push({Line: lineCount, Type: 'else if Statement', Name: '', Condition: binaexp(item.alternate.test), Value: ''});
-            lineCount++;
-            cases(item.alternate.consequent);
-        }
-        if(item.alternate.alternate){
-            myTable.push({Line: lineCount, Type: 'else Statement', Name: '', Condition: '', Value: ''});
-            lineCount++;
-            cases(item.alternate.alternate);
-        }
-
-    }
-};
-
-const binaexp= (item)=>{
-    let expression='';
-    if(item.left.type=='Identifier') {
-        expression += item.left.name;
-        expression += item.operator;
-    }
-    if(item.left.type=='BinaryExpression') {
-        expression += '('+binaexp(item.left)+')';
-        expression += item.operator;
-    }
-    if(item.left.type=='Literal') {
-        expression += item.right.value;
-        expression += item.operator;
-    }
-    if(item.left.type=='MemberExpression')
-        expression+=cases(item.left);
-    if(item.right.type=='Identifier')
-        expression+=item.right.name;
-    if(item.right.type=='Literal')
-        expression+=item.right.value;
-    if(item.right.type=='BinaryExpression')
-        expression+= binaexp(item.right);
-    if(item.right.type=='MemberExpression')
-        expression+=cases(item.right);
+const binaryExp= (item)=>{
+    const left= cases(item.left);
+    const right= cases(item.right);
+    const expression= left+item.operator+right;
+    if(item.operator==='+' || item.operator==='-')
+        return '('+expression+')';
     return expression;
 };
 
@@ -149,5 +101,54 @@ const unaryExp=(item) =>{
     return expression;
 };
 
+const forState= (item)=>{
+    let expression= item.init.kind+' '+ cases(item.init.declarations[0].id)+ '='+item.init.declarations[0].init.value+'; ';
+    expression+=cases(item.test)+'; ';
+    expression+=updateState(item.update);
+    myTable.push({Line: lineCount , Type: item.type, Name: '', Condition: expression , Value: ''});
+    lineCount++;
+    parseAllCode(item.body);
+};
 
+const  updateState=(item)=> {
+    let opertator = item.operator;
+    item.prefix ? opertator = opertator + cases(item.argument) : opertator = cases(item.argument) + opertator;
+    return opertator;
+};
 
+const allCases={
+    'FunctionDeclaration': fundecl,
+    'VariableDeclaration': vardecl,
+    'ExpressionStatement': expState,
+    'WhileStatement': whileState,
+    'IfStatement': ifState,
+    'ElseIfStatment': elseIfState,
+    'ReturnStatement': returnState,
+    'BlockStatement': (myCase)=>parseAllCode(myCase),
+    'Identifier': (myCase)=> {return myCase.name;},
+    'UnaryExpression': unaryExp,
+    'MemberExpression': (myCase)=> {return myCase.object.name + '[' + cases(myCase.property) + ']';},
+    'ForStatement': forState,
+    'Literal': (myCase)=> {return myCase.value;},
+    'BinaryExpression': binaryExp,
+    'UpdateExpression': updateExp,
+    'AssignmentExpression':assExp,
+
+};
+
+const objectToTable= ()=> {
+    clear();
+    let tableHtml = '<tr class="mytr"><th class="myTh">Line #</th><th class="myTh">Type</th><th class="myTh">Name</th><th class="myTh">Condition</th><th class="myTh">Value</th></tr>';
+    myTable.forEach(row => {
+        if(row!==undefined)
+            tableHtml += `<tr class="mytr"><td class="myTd">${row.Line}</td><td class="myTd">${row.Type}</td><td class="myTd">${row.Name}</td><td class="myTd">${row.Condition}</td><td class="myTd">${row.Value}</td></tr>}`;
+    });
+    return tableHtml;
+};
+
+const clear= ()=>{
+    $('.mytr').remove();
+    $('.myTh').remove();
+    $('.myTd').remove();
+
+}

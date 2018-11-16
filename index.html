@@ -18,10 +18,35 @@
                 width: 80%;
                 height: 95%;
             }
+
+            #table {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+                text-align: center;
+            }
+
+            .myTd, .myTh {
+
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            .mytr:nth-child(even){background-color: #f2f2f2;}
+
+            .mytr:hover {background-color: #ddd;}
+
+            .myTh {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
         </style>
     </head>
     <body>
-        <table>
+        <table id="table">
             <tr>
                 <td>
                     <div>
