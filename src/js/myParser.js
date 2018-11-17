@@ -1,11 +1,7 @@
 let lineCount=1;
 let myTable=[];
 
-export const getTable=()=> {return myTable;};
-
 export const setTable=(t)=>{myTable=t;};
-
-export const getLineCount=()=> {return lineCount;};
 
 export const setLineCount=(l)=>{lineCount=l;};
 
@@ -63,7 +59,7 @@ const whileState=(item) =>{
 const binaryExp= (item)=>{
     const left= cases(item.left);
     const right= cases(item.right);
-    const expression= left+item.operator+right;
+    const expression= left+' '+item.operator+' '+right;
     if(item.operator==='+' || item.operator==='-')
         return '('+expression+')';
     return expression;
@@ -74,11 +70,11 @@ const fundecl= (item)=>{
     item.params.forEach((param)=> myTable.push({Line: lineCount , Type:'Variable Declaration', Name: param.name, Condition:'' , Value:''}) );
     lineCount++;
     if(item.body)
-        parseAllCode(item.body);
+        cases(item.body);
 };
 
 const vardecl= (item)=>{
-    item.declarations.forEach((decleration)=>myTable.push({Line: lineCount , Type: decleration.type, Name: decleration.id.name, Condition:'' , Value:decleration.init}));
+    item.declarations.forEach((decleration)=>myTable.push({Line: lineCount , Type:'Variable Declaration', Name: decleration.id.name, Condition:'' , Value:decleration.init}));
     lineCount++;
 };
 
@@ -119,13 +115,20 @@ const allCases={
     'ReturnStatement': returnState,
     'BlockStatement': (myCase)=>parseAllCode(myCase),
     'Identifier': (myCase)=> {return myCase.name;},
-    'UnaryExpression': unaryExp,
-    'MemberExpression': (myCase)=> {return myCase.object.name + '[' + cases(myCase.property) + ']';},
+    'MemberExpression': (myCase)=> {return myCase.object.name + `[${cases(myCase.property)}]`;},
     'ForStatement': forState,
     'Literal': (myCase)=> {return myCase.value;},
     'BinaryExpression': binaryExp,
     'UpdateExpression': updateExp,
     'AssignmentExpression':assExp,
+    'UnaryExpression':unaryExp
 
 };
+
+export const parserStart=(parsedCode)=>{
+    setLineCount(1);
+    setTable([]);
+    parseAllCode(parsedCode);
+    return myTable;
+}
 
