@@ -69,8 +69,7 @@ const fundecl= (item)=>{
     myTable.push({Line: lineCount , Type: item.type, Name: item.id.name, Condition:'' , Value:''});
     item.params.forEach((param)=> myTable.push({Line: lineCount , Type:'Variable Declaration', Name: param.name, Condition:'' , Value:''}) );
     lineCount++;
-    if(item.body)
-        cases(item.body);
+    cases(item.body);
 };
 
 const vardecl= (item)=>{
