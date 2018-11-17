@@ -2,7 +2,7 @@ import $ from 'jquery';
 import {parseCode} from './code-analyzer';
 import * as myParser from './myParser';
 
-let myTable
+let myTable;
 
 $(document).ready(function () {
     $('#codeSubmissionButton').click(() => {

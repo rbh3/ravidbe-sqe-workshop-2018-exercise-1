@@ -127,82 +127,82 @@ describe('Tests for myParser functions', () => {
 
     it('update statement prefix',()=>{
         const code={
-            "type": "Program",
-                "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "UpdateExpression",
-                        "operator": "++",
-                        "argument": {
-                            "type": "Identifier",
-                            "name": "i"
+                    'type': 'ExpressionStatement',
+                    'expression': {
+                        'type': 'UpdateExpression',
+                        'operator': '++',
+                        'argument': {
+                            'type': 'Identifier',
+                            'name': 'i'
                         },
-                        "prefix": true
+                        'prefix': true
                     }
                 }
             ],
-                "sourceType": "script"
+            'sourceType': 'script'
         };
         assert.deepEqual(
             myParser.parserStart(code),
             [{Line: 1 , Type:'UpdateExpression', Name: '++i',Condition:'',Value: ''}]
         );
-    })
+    });
 
     it('Function Declaration and Variable Declaration',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "FunctionDeclaration",
-                    "id": {
-                        "type": "Identifier",
-                        "name": "binarySearch"
+                    'type': 'FunctionDeclaration',
+                    'id': {
+                        'type': 'Identifier',
+                        'name': 'binarySearch'
                     },
-                    "params": [],
-                    "body": {
-                        "type": "BlockStatement",
-                        "body": [
+                    'params': [],
+                    'body': {
+                        'type': 'BlockStatement',
+                        'body': [
                             {
-                                "type": "VariableDeclaration",
-                                "declarations": [
+                                'type': 'VariableDeclaration',
+                                'declarations': [
                                     {
-                                        "type": "VariableDeclarator",
-                                        "id": {
-                                            "type": "Identifier",
-                                            "name": "low"
+                                        'type': 'VariableDeclarator',
+                                        'id': {
+                                            'type': 'Identifier',
+                                            'name': 'low'
                                         },
-                                        "init": null
+                                        'init': null
                                     },
                                     {
-                                        "type": "VariableDeclarator",
-                                        "id": {
-                                            "type": "Identifier",
-                                            "name": "high"
+                                        'type': 'VariableDeclarator',
+                                        'id': {
+                                            'type': 'Identifier',
+                                            'name': 'high'
                                         },
-                                        "init": null
+                                        'init': null
                                     },
                                     {
-                                        "type": "VariableDeclarator",
-                                        "id": {
-                                            "type": "Identifier",
-                                            "name": "mid"
+                                        'type': 'VariableDeclarator',
+                                        'id': {
+                                            'type': 'Identifier',
+                                            'name': 'mid'
                                         },
-                                        "init": null
+                                        'init': null
                                     }
                                 ],
-                                "kind": "let"
+                                'kind': 'let'
                             }
                         ]
                     },
-                    "generator": false,
-                    "expression": false,
-                    "async": false
+                    'generator': false,
+                    'expression': false,
+                    'async': false
                 }
             ],
-            "sourceType": "script"
-        }
+            'sourceType': 'script'
+        };
         assert.deepEqual(
             myParser.parserStart(code),
             [{Line: 1 , Type:'FunctionDeclaration', Name: 'binarySearch',Condition:'',Value: ''},
@@ -214,107 +214,107 @@ describe('Tests for myParser functions', () => {
 
     it('AssignmentExpression',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "low"
+                    'type': 'ExpressionStatement',
+                    'expression': {
+                        'type': 'AssignmentExpression',
+                        'operator': '=',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'low'
                         },
-                        "right": {
-                            "type": "Literal",
-                            "value": 0,
-                            "raw": "0"
+                        'right': {
+                            'type': 'Literal',
+                            'value': 0,
+                            'raw': '0'
                         }
                     }
                 },
                 {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "high"
+                    'type': 'ExpressionStatement',
+                    'expression': {
+                        'type': 'AssignmentExpression',
+                        'operator': '=',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'high'
                         },
-                        "right": {
-                            "type": "BinaryExpression",
-                            "operator": "-",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "n"
+                        'right': {
+                            'type': 'BinaryExpression',
+                            'operator': '-',
+                            'left': {
+                                'type': 'Identifier',
+                                'name': 'n'
                             },
-                            "right": {
-                                "type": "Literal",
-                                "value": 1,
-                                "raw": "1"
+                            'right': {
+                                'type': 'Literal',
+                                'value': 1,
+                                'raw': '1'
                             }
                         }
                     }
                 },
                 {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "mid"
+                    'type': 'ExpressionStatement',
+                    'expression': {
+                        'type': 'AssignmentExpression',
+                        'operator': '=',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'mid'
                         },
-                        "right": {
-                            "type": "BinaryExpression",
-                            "operator": "/",
-                            "left": {
-                                "type": "BinaryExpression",
-                                "operator": "+",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "low"
+                        'right': {
+                            'type': 'BinaryExpression',
+                            'operator': '/',
+                            'left': {
+                                'type': 'BinaryExpression',
+                                'operator': '+',
+                                'left': {
+                                    'type': 'Identifier',
+                                    'name': 'low'
                                 },
-                                "right": {
-                                    "type": "Identifier",
-                                    "name": "high"
+                                'right': {
+                                    'type': 'Identifier',
+                                    'name': 'high'
                                 }
                             },
-                            "right": {
-                                "type": "Literal",
-                                "value": 2,
-                                "raw": "2"
+                            'right': {
+                                'type': 'Literal',
+                                'value': 2,
+                                'raw': '2'
                             }
                         }
                     }
                 },
                 {
-                    "type": "ExpressionStatement",
-                    "expression": {
-                        "type": "AssignmentExpression",
-                        "operator": "=",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "high"
+                    'type': 'ExpressionStatement',
+                    'expression': {
+                        'type': 'AssignmentExpression',
+                        'operator': '=',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'high'
                         },
-                        "right": {
-                            "type": "BinaryExpression",
-                            "operator": "-",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "mid"
+                        'right': {
+                            'type': 'BinaryExpression',
+                            'operator': '-',
+                            'left': {
+                                'type': 'Identifier',
+                                'name': 'mid'
                             },
-                            "right": {
-                                "type": "Literal",
-                                "value": 1,
-                                "raw": "1"
+                            'right': {
+                                'type': 'Literal',
+                                'value': 1,
+                                'raw': '1'
                             }
                         }
                     }
                 }
             ],
-            "sourceType": "script"
-        }
+            'sourceType': 'script'
+        };
         assert.deepEqual(
             myParser.parserStart(code),
             [{Line: 1 , Type:'AssignmentExpression', Name: 'low',Condition:'',Value: 0},
@@ -326,39 +326,39 @@ describe('Tests for myParser functions', () => {
 
     it('return Unary Expression',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "FunctionDeclaration",
-                    "id": {
-                        "type": "Identifier",
-                        "name": "x"
+                    'type': 'FunctionDeclaration',
+                    'id': {
+                        'type': 'Identifier',
+                        'name': 'x'
                     },
-                    "params": [],
-                    "body": {
-                        "type": "BlockStatement",
-                        "body": [
+                    'params': [],
+                    'body': {
+                        'type': 'BlockStatement',
+                        'body': [
                             {
-                                "type": "ReturnStatement",
-                                "argument": {
-                                    "type": "UnaryExpression",
-                                    "operator": "-",
-                                    "argument": {
-                                        "type": "Literal",
-                                        "value": 1,
-                                        "raw": "1"
+                                'type': 'ReturnStatement',
+                                'argument': {
+                                    'type': 'UnaryExpression',
+                                    'operator': '-',
+                                    'argument': {
+                                        'type': 'Literal',
+                                        'value': 1,
+                                        'raw': '1'
                                     },
-                                    "prefix": true
+                                    'prefix': true
                                 }
                             }
                         ]
                     },
-                    "generator": false,
-                    "expression": false,
-                    "async": false
+                    'generator': false,
+                    'expression': false,
+                    'async': false
                 }
             ],
-            "sourceType": "script"
+            'sourceType': 'script'
         };
         assert.deepEqual(
             myParser.parserStart(code),
@@ -369,29 +369,29 @@ describe('Tests for myParser functions', () => {
 
     it('while statement',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "WhileStatement",
-                    "test": {
-                        "type": "BinaryExpression",
-                        "operator": "<=",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "low"
+                    'type': 'WhileStatement',
+                    'test': {
+                        'type': 'BinaryExpression',
+                        'operator': '<=',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'low'
                         },
-                        "right": {
-                            "type": "Identifier",
-                            "name": "high"
+                        'right': {
+                            'type': 'Identifier',
+                            'name': 'high'
                         }
                     },
-                    "body": {
-                        "type": "BlockStatement",
-                        "body": []
+                    'body': {
+                        'type': 'BlockStatement',
+                        'body': []
                     }
                 }
             ],
-            "sourceType": "script"
+            'sourceType': 'script'
         };
         assert.deepEqual(
             myParser.parserStart(code),
@@ -401,116 +401,116 @@ describe('Tests for myParser functions', () => {
 
     it('if statement',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "IfStatement",
-                    "test": {
-                        "type": "BinaryExpression",
-                        "operator": "<",
-                        "left": {
-                            "type": "Identifier",
-                            "name": "X"
+                    'type': 'IfStatement',
+                    'test': {
+                        'type': 'BinaryExpression',
+                        'operator': '<',
+                        'left': {
+                            'type': 'Identifier',
+                            'name': 'X'
                         },
-                        "right": {
-                            "type": "MemberExpression",
-                            "computed": true,
-                            "object": {
-                                "type": "Identifier",
-                                "name": "V"
+                        'right': {
+                            'type': 'MemberExpression',
+                            'computed': true,
+                            'object': {
+                                'type': 'Identifier',
+                                'name': 'V'
                             },
-                            "property": {
-                                "type": "Identifier",
-                                "name": "mid"
+                            'property': {
+                                'type': 'Identifier',
+                                'name': 'mid'
                             }
                         }
                     },
-                    "consequent": {
-                        "type": "ExpressionStatement",
-                        "expression": {
-                            "type": "AssignmentExpression",
-                            "operator": "=",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "high"
+                    'consequent': {
+                        'type': 'ExpressionStatement',
+                        'expression': {
+                            'type': 'AssignmentExpression',
+                            'operator': '=',
+                            'left': {
+                                'type': 'Identifier',
+                                'name': 'high'
                             },
-                            "right": {
-                                "type": "BinaryExpression",
-                                "operator": "-",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "mid"
+                            'right': {
+                                'type': 'BinaryExpression',
+                                'operator': '-',
+                                'left': {
+                                    'type': 'Identifier',
+                                    'name': 'mid'
                                 },
-                                "right": {
-                                    "type": "Literal",
-                                    "value": 1,
-                                    "raw": "1"
+                                'right': {
+                                    'type': 'Literal',
+                                    'value': 1,
+                                    'raw': '1'
                                 }
                             }
                         }
                     },
-                    "alternate": {
-                        "type": "IfStatement",
-                        "test": {
-                            "type": "BinaryExpression",
-                            "operator": ">",
-                            "left": {
-                                "type": "Identifier",
-                                "name": "X"
+                    'alternate': {
+                        'type': 'IfStatement',
+                        'test': {
+                            'type': 'BinaryExpression',
+                            'operator': '>',
+                            'left': {
+                                'type': 'Identifier',
+                                'name': 'X'
                             },
-                            "right": {
-                                "type": "MemberExpression",
-                                "computed": true,
-                                "object": {
-                                    "type": "Identifier",
-                                    "name": "V"
+                            'right': {
+                                'type': 'MemberExpression',
+                                'computed': true,
+                                'object': {
+                                    'type': 'Identifier',
+                                    'name': 'V'
                                 },
-                                "property": {
-                                    "type": "Identifier",
-                                    "name": "mid"
+                                'property': {
+                                    'type': 'Identifier',
+                                    'name': 'mid'
                                 }
                             }
                         },
-                        "consequent": {
-                            "type": "ExpressionStatement",
-                            "expression": {
-                                "type": "AssignmentExpression",
-                                "operator": "=",
-                                "left": {
-                                    "type": "Identifier",
-                                    "name": "low"
+                        'consequent': {
+                            'type': 'ExpressionStatement',
+                            'expression': {
+                                'type': 'AssignmentExpression',
+                                'operator': '=',
+                                'left': {
+                                    'type': 'Identifier',
+                                    'name': 'low'
                                 },
-                                "right": {
-                                    "type": "BinaryExpression",
-                                    "operator": "+",
-                                    "left": {
-                                        "type": "Identifier",
-                                        "name": "mid"
+                                'right': {
+                                    'type': 'BinaryExpression',
+                                    'operator': '+',
+                                    'left': {
+                                        'type': 'Identifier',
+                                        'name': 'mid'
                                     },
-                                    "right": {
-                                        "type": "Literal",
-                                        "value": 1,
-                                        "raw": "1"
+                                    'right': {
+                                        'type': 'Literal',
+                                        'value': 1,
+                                        'raw': '1'
                                     }
                                 }
                             }
                         },
-                        "alternate": {
-                            "type": "ExpressionStatement",
-                            "expression": {
-                                "type": "UpdateExpression",
-                                "operator": "++",
-                                "argument": {
-                                    "type": "Identifier",
-                                    "name": "mid"
+                        'alternate': {
+                            'type': 'ExpressionStatement',
+                            'expression': {
+                                'type': 'UpdateExpression',
+                                'operator': '++',
+                                'argument': {
+                                    'type': 'Identifier',
+                                    'name': 'mid'
                                 },
-                                "prefix": true
+                                'prefix': true
                             }
                         }
                     }
                 }
             ],
-            "sourceType": "script"
+            'sourceType': 'script'
         };
         assert.deepEqual(
             myParser.parserStart(code),
@@ -525,60 +525,60 @@ describe('Tests for myParser functions', () => {
 
     it('if statement with literals',()=>{
         const code={
-            "type": "Program",
-            "body": [
+            'type': 'Program',
+            'body': [
                 {
-                    "type": "IfStatement",
-                    "test": {
-                        "type": "Literal",
-                        "value": true,
-                        "raw": "true"
+                    'type': 'IfStatement',
+                    'test': {
+                        'type': 'Literal',
+                        'value': true,
+                        'raw': 'true'
                     },
-                    "consequent": {
-                        "type": "BlockStatement",
-                        "body": []
+                    'consequent': {
+                        'type': 'BlockStatement',
+                        'body': []
                     },
-                    "alternate": {
-                        "type": "IfStatement",
-                        "test": {
-                            "type": "Literal",
-                            "value": false,
-                            "raw": "false"
+                    'alternate': {
+                        'type': 'IfStatement',
+                        'test': {
+                            'type': 'Literal',
+                            'value': false,
+                            'raw': 'false'
                         },
-                        "consequent": {
-                            "type": "BlockStatement",
-                            "body": [
+                        'consequent': {
+                            'type': 'BlockStatement',
+                            'body': [
                                 {
-                                    "type": "IfStatement",
-                                    "test": {
-                                        "type": "BinaryExpression",
-                                        "operator": "<",
-                                        "left": {
-                                            "type": "Identifier",
-                                            "name": "x"
+                                    'type': 'IfStatement',
+                                    'test': {
+                                        'type': 'BinaryExpression',
+                                        'operator': '<',
+                                        'left': {
+                                            'type': 'Identifier',
+                                            'name': 'x'
                                         },
-                                        "right": {
-                                            "type": "Literal",
-                                            "value": 5,
-                                            "raw": "5"
+                                        'right': {
+                                            'type': 'Literal',
+                                            'value': 5,
+                                            'raw': '5'
                                         }
                                     },
-                                    "consequent": {
-                                        "type": "BlockStatement",
-                                        "body": []
+                                    'consequent': {
+                                        'type': 'BlockStatement',
+                                        'body': []
                                     },
-                                    "alternate": null
+                                    'alternate': null
                                 }
                             ]
                         },
-                        "alternate": {
-                            "type": "BlockStatement",
-                            "body": []
+                        'alternate': {
+                            'type': 'BlockStatement',
+                            'body': []
                         }
                     }
                 }
             ],
-            "sourceType": "script"
+            'sourceType': 'script'
         };
         assert.deepEqual(
             myParser.parserStart(code),

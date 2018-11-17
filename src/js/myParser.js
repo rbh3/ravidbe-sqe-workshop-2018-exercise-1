@@ -130,5 +130,5 @@ export const parserStart=(parsedCode)=>{
     setTable([]);
     parseAllCode(parsedCode);
     return myTable;
-}
+};
 
