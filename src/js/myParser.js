@@ -66,7 +66,7 @@ const binaryExp= (item)=>{
 };
 
 const fundecl= (item)=>{
-    myTable.push({Line: lineCount , Type: item.type, Name: item.id.name, Condition:'' , Value:''});
+    myTable.push({Line: lineCount , Type: item.type, Name: item.id ? item.id.name : item.id, Condition:'' , Value:''});
     item.params.forEach((param)=> myTable.push({Line: lineCount , Type:'Variable Declaration', Name: param.name, Condition:'' , Value:''}) );
     lineCount++;
     cases(item.body);
@@ -120,7 +120,8 @@ const allCases={
     'BinaryExpression': binaryExp,
     'UpdateExpression': updateExp,
     'AssignmentExpression':assExp,
-    'UnaryExpression':unaryExp
+    'UnaryExpression':unaryExp,
+    'ArrowFunctionExpression': fundecl
 
 };
 
